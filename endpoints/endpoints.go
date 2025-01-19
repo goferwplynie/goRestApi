@@ -42,8 +42,9 @@ func PostUsersHandler(ctx *gin.Context) {
     err := ctx.ShouldBindJSON(&user)
     if err != nil{
       ctx.JSON(http.StatusBadRequest,gin.H{
-        "error": err.Error(),
+        "error": "wrong data structure",
       })
+      return
     }
 
    users.Users = append(users.Users, user) 
@@ -77,8 +78,9 @@ func PutUserHandler(ctx *gin.Context){
 
   if err != nil{
     ctx.JSON(http.StatusBadRequest,gin.H{
-      "error": err.Error(),
+      "error": "wrong data structure",
     })
+    return
   }
 
   user.Id = id
@@ -101,8 +103,9 @@ func PatchUserHandler(ctx *gin.Context){
   
   if err != nil{
     ctx.JSON(http.StatusBadRequest,gin.H{
-      "error": err.Error(),
+      "error": "wrong data structure",
     })
+    return
   }
 
   for i, v := range users.Users{
