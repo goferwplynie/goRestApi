@@ -15,7 +15,8 @@ func main(){
   router.GET("/users/:id", endpoints.GetUserHandler)
 
   router.POST("/users", endpoints.PostUsersHandler)
-  router.DELETE("users/:id", endpoints.DeleteUsersHandler)
+  router.PUT("/users/:id", endpoints.PutUserHandler)
+  router.DELETE("/users/:id", endpoints.DeleteUsersHandler)
 
   router.Run()
 

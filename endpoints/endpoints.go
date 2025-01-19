@@ -65,5 +65,29 @@ func DeleteUsersHandler(ctx *gin.Context) {
   }
     
   jsontools.WriteJsonFile()
+  ctx.Status(http.StatusCreated)
+}
+
+func PutUserHandler(ctx *gin.Context){
+  id := handleIdParam(ctx)
+
+  var user users.User
+
+  err := ctx.ShouldBindJSON(&user)
+
+  if err != nil{
+    ctx.JSON(http.StatusBadRequest,gin.H{
+      "error": err.Error(),
+    })
+  }
+
+  user.Id = id
+  
+  for i, v := range users.Users{
+    if v.Id == id{
+      users.Users[i] = user
+    }
+  }
+
   ctx.Status(http.StatusNoContent)
 }

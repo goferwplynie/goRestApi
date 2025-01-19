@@ -7,6 +7,7 @@ GoRestAPI is a simple RESTful API built using the Gin framework in Go. It provid
 - **GET /users**: Retrieve all users.
 - **GET /users/:id**: Retrieve a specific user by their ID.
 - **POST /users**: Add a new user.
+- **PUT /users/:id**: Replace a specific user by id
 - **DELETE /users/:id**: Delete a user by their ID.
 
 ## Prerequisites
@@ -54,13 +55,19 @@ Add a new user by sending a JSON payload.
 ```bash
 curl -X POST http://localhost:8080/users \
 -H "Content-Type: application/json" \
--d '{"Id": 1, "Name": "John Doe", "Age": 30}'
+-d '{"Id": 1, "Name": "John Doe", "birthYear": 30}'
 ```
 
 ### DELETE /users/:id
 Delete a user by their ID.
 ```bash
 curl -X DELETE http://localhost:8080/users/1
+```
+
+### PUT /users/:id
+Replace a specific user by id
+```bash
+curl -X PUT 127.0.0.1:8080/users/1 -H "Content-Type: application/json" -d '{"name":"John", "surname":"Doe", "birthYear":1979}' -v
 ```
 
 ## File Storage
