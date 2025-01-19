@@ -1,5 +1,26 @@
 [
-  {"Id": 1, "Name": "Dexter", "Surname": "Morgan", "BirthYear": 1971},
-  {"Id": 2, "Name": "James", "Surname": "Doakes", "BirthYear": 1962},
-  {"Id": 3, "Name": "Frank", "Surname": "Lundy", "BirthYear": 1949}
+ {
+  "id": 1,
+  "name": "Dexter",
+  "surname": "Morgan",
+  "birthYear": 1971
+ },
+ {
+  "id": 2,
+  "name": "James",
+  "surname": "Doakes",
+  "birthYear": 1962
+ },
+ {
+  "id": 3,
+  "name": "Frank",
+  "surname": "Lundy",
+  "birthYear": 1949
+ },
+ {
+  "id": 4,
+  "name": "Debra",
+  "surname": "Morgan",
+  "birthYear": 1979
+ }
 ]
