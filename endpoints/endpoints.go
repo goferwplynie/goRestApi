@@ -91,3 +91,31 @@ func PutUserHandler(ctx *gin.Context){
 
   ctx.Status(http.StatusNoContent)
 }
+
+func PatchUserHandler(ctx *gin.Context){
+  id := handleIdParam(ctx)
+  
+  var user users.User
+
+  err := ctx.ShouldBindJSON(&user)
+  
+  if err != nil{
+    ctx.JSON(http.StatusBadRequest,gin.H{
+      "error": err.Error(),
+    })
+  }
+
+  for i, v := range users.Users{
+    if v.Id == id{
+      if user.Name != ""{
+        users.Users[i].Name = user.Name
+      }
+      if user.Surname != ""{
+        users.Users[i].Surname = user.Surname
+      }
+      if user.BirthYear != 0{
+        users.Users[i].BirthYear = user.BirthYear
+      }
+    }
+  }
+}

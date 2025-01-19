@@ -16,6 +16,7 @@ func main(){
 
   router.POST("/users", endpoints.PostUsersHandler)
   router.PUT("/users/:id", endpoints.PutUserHandler)
+  router.PATCH("/users/:id", endpoints.PatchUserHandler)
   router.DELETE("/users/:id", endpoints.DeleteUsersHandler)
 
   router.Run()
