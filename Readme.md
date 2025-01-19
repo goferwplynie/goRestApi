@@ -7,7 +7,8 @@ GoRestAPI is a simple RESTful API built using the Gin framework in Go. It provid
 - **GET /users**: Retrieve all users.
 - **GET /users/:id**: Retrieve a specific user by their ID.
 - **POST /users**: Add a new user.
-- **PUT /users/:id**: Replace a specific user by id
+- **PUT /users/:id**: Replace a specific user by id.
+- **PATCH /users/:id**: Update user by his id.
 - **DELETE /users/:id**: Delete a user by their ID.
 
 ## Prerequisites
@@ -41,33 +42,39 @@ GoRestAPI is a simple RESTful API built using the Gin framework in Go. It provid
 ### GET /users
 Retrieve a list of all users.
 ```bash
-curl -X GET http://localhost:8080/users
+curl -X GET localhost:8080/users
 ```
 
 ### GET /users/:id
 Retrieve a specific user by their ID.
 ```bash
-curl -X GET http://localhost:8080/users/1
+curl -X GET localhost:8080/users/1
 ```
 
 ### POST /users
 Add a new user by sending a JSON payload.
 ```bash
-curl -X POST http://localhost:8080/users \
+curl -X POST localhost:8080/users \
 -H "Content-Type: application/json" \
--d '{"Id": 1, "Name": "John Doe", "birthYear": 30}'
+-d '{"Id": 1, "Name": "John Doe", "birthYear": 1999}'
 ```
 
 ### DELETE /users/:id
 Delete a user by their ID.
 ```bash
-curl -X DELETE http://localhost:8080/users/1
+curl -X DELETE localhost:8080/users/1
 ```
 
 ### PUT /users/:id
-Replace a specific user by id
+Replace a specific user by id.
 ```bash
-curl -X PUT 127.0.0.1:8080/users/1 -H "Content-Type: application/json" -d '{"name":"John", "surname":"Doe", "birthYear":1979}' -v
+curl -X PUT localhost:8080/users/1 -H "Content-Type: application/json" -d '{"name":"John", "surname":"Doe", "birthYear":1979}' -v
+```
+
+### PATCH /users/:id
+Update user by his id.
+```bash
+curl -X PATCH localhost:8080/users/1  -H "Content-Type: application/json" -d '{"birthYear":1971}' -v
 ```
 
 ## File Storage
