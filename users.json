@@ -1,26 +1,3 @@
 [
- {
-  "id": 1,
-  "name": "Dexter",
-  "surname": "Morgan",
-  "birthYear": 1971
- },
- {
-  "id": 2,
-  "name": "James",
-  "surname": "Doakes",
-  "birthYear": 1962
- },
- {
-  "id": 3,
-  "name": "Frank",
-  "surname": "Lundy",
-  "birthYear": 1949
- },
- {
-  "id": 4,
-  "name": "Debra",
-  "surname": "Morgan",
-  "birthYear": 1979
- }
+
 ]
