@@ -1,10 +1,12 @@
 package endpoints
 
 import (
+	"log"
 	"net/http"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/goferpwlynie/goRestApi/db"
 	jsontools "github.com/goferpwlynie/goRestApi/jsonTools"
 	"github.com/goferpwlynie/goRestApi/users"
 )
@@ -22,7 +24,25 @@ func handleIdParam(ctx *gin.Context) int {
 }
 
 func GetUsersHandler(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, users.Users)
+	rows, err := db.DB.Query(ctx, "select * from users")
+
+	defer rows.Close()
+	for rows.Next() {
+		var id int32
+		var name string
+		var surname string
+		var birthYear int
+		if err := rows.Scan(&id, &name, &surname, &birthYear); err != nil {
+			panic(err)
+		}
+		log.Printf("%d | %s | %s | %d\n", id, name, surname, birthYear)
+	}
+
+	if err != nil {
+		log.Fatalf("error querying db: %v\n", err)
+	}
+
+	ctx.JSON(http.StatusOK, rows)
 }
 
 func GetUserHandler(ctx *gin.Context) {
