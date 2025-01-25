@@ -1,6 +1,7 @@
 package endpoints
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -26,38 +27,46 @@ func handleIdParam(ctx *gin.Context) int {
 func GetUsersHandler(ctx *gin.Context) {
 	rows, err := db.DB.Query(ctx, "select * from users")
 
-	defer rows.Close()
-	for rows.Next() {
-		var id int32
-		var name string
-		var surname string
-		var birthYear int
-		if err := rows.Scan(&id, &name, &surname, &birthYear); err != nil {
-			panic(err)
-		}
-		log.Printf("%d | %s | %s | %d\n", id, name, surname, birthYear)
-	}
-
 	if err != nil {
 		log.Fatalf("error querying db: %v\n", err)
 	}
 
-	ctx.JSON(http.StatusOK, rows)
+  var usersSlice []users.User
+
+	defer rows.Close()
+	for rows.Next() {
+    var user users.User
+		err := rows.Scan(&user.Id, &user.Name, &user.Surname, &user.BirthYear) 
+    if err != nil {
+		  log.Fatalf("error reading rows: %v\n", err)
+		}
+    usersSlice = append(usersSlice, user)
+	}
+
+
+	ctx.JSON(http.StatusOK, usersSlice)
 }
 
 func GetUserHandler(ctx *gin.Context) {
 	id := handleIdParam(ctx)
 
-	for i, v := range users.Users {
-		if v.Id == id {
-			ctx.JSON(http.StatusOK, users.Users[i])
-			break
-		}
-	}
+  rows, err := db.DB.Query(ctx, "select * from users where id=" + fmt.Sprint(id))
+  if err != nil{
+    panic(err)
+  }
+  defer rows.Close()
+  for rows.Next(){
+    var user users.User
+		err := rows.Scan(&user.Id, &user.Name, &user.Surname, &user.BirthYear) 
+    if err != nil{
+      log.Fatalf("error reading rows: %v\n", err)
+    }
+  }
 }
 
 func PostUsersHandler(ctx *gin.Context) {
 	var user users.User
+
 
 	err := ctx.ShouldBindJSON(&user)
 	if err != nil {
@@ -67,25 +76,19 @@ func PostUsersHandler(ctx *gin.Context) {
 		return
 	}
 
-	users.Users = append(users.Users, user)
-	go jsontools.WriteJsonFile()
+  query := "INSERT INTO users (name, surname, birth_year) VALUES('"+user.Name+"', '"+user.Surname+"', "+fmt.Sprint(user.BirthYear)+")"
+  db.DB.Exec(ctx, query)
 
-	ctx.JSON(http.StatusOK, gin.H{
-		"message": user,
-	})
+  ctx.Status(http.StatusCreated)
 }
 
 func DeleteUsersHandler(ctx *gin.Context) {
 	id := handleIdParam(ctx)
+  query := "DELETE FROM public.users WHERE id ="+ fmt.Sprint(id)+";"
 
-	for i, v := range users.Users {
-		if v.Id == id {
-			users.Users = append(users.Users[:i], users.Users[i+1:]...)
-			break
-		}
-	}
+  db.DB.Exec(ctx, query)
 
-	go jsontools.WriteJsonFile()
+
 	ctx.Status(http.StatusCreated)
 }
 

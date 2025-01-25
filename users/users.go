@@ -1,6 +1,5 @@
 package users
 
-
 type User struct{
   Id int `json:"id"`
   Name string `json:"name"`
@@ -8,4 +7,3 @@ type User struct{
   BirthYear int `json:"birthYear"`
 }
 
-var Users []User
