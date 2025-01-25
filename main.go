@@ -7,12 +7,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/goferpwlynie/goRestApi/db"
 	"github.com/goferpwlynie/goRestApi/endpoints"
-	jsontools "github.com/goferpwlynie/goRestApi/jsonTools"
 	"github.com/joho/godotenv"
 )
 
 func main() {
-	jsontools.LoadFromJson()
 
 	err := godotenv.Load(".env")
 	if err != nil {
@@ -29,7 +27,6 @@ func main() {
 	router.GET("/users/:id", endpoints.GetUserHandler)
 
 	router.POST("/users", endpoints.PostUsersHandler)
-	router.PUT("/users/:id", endpoints.PutUserHandler)
 	router.PATCH("/users/:id", endpoints.PatchUserHandler)
 	router.DELETE("/users/:id", endpoints.DeleteUsersHandler)
 
