@@ -1,34 +1,44 @@
 # GoRestAPI Project
 
 ## Overview
+
 GoRestAPI is a simple RESTful API built using the Gin framework in Go. It provides basic CRUD functionality to manage user data. The project demonstrates how to set up endpoints, handle JSON data, and work with files for persistent storage.
 
 ## Features
+
 - **GET /users**: Retrieve all users.
 - **GET /users/:id**: Retrieve a specific user by their ID.
 - **POST /users**: Add a new user.
-- **PUT /users/:id**: Replace a specific user by id.
 - **PATCH /users/:id**: Update user by his id.
 - **DELETE /users/:id**: Delete a user by their ID.
 
 ## Prerequisites
+
 - Go (1.16 or higher)
 - Git
 
 ## Installation
+
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/goferpwlynie/goRestApi.git
    cd goRestApi
    ```
 
 2. Install dependencies:
+
    ```bash
    go mod tidy
    ```
 
+3. create .env file
+4. add `DATABASE_URL` variable to .env
+
 ## Usage
+
 1. Start the server:
+
    ```bash
    go run main.go
    ```
@@ -40,19 +50,25 @@ GoRestAPI is a simple RESTful API built using the Gin framework in Go. It provid
 ## Endpoints
 
 ### GET /users
+
 Retrieve a list of all users.
+
 ```bash
 curl -X GET localhost:8080/users
 ```
 
 ### GET /users/:id
+
 Retrieve a specific user by their ID.
+
 ```bash
 curl -X GET localhost:8080/users/1
 ```
 
 ### POST /users
+
 Add a new user by sending a JSON payload.
+
 ```bash
 curl -X POST localhost:8080/users \
 -H "Content-Type: application/json" \
@@ -60,30 +76,30 @@ curl -X POST localhost:8080/users \
 ```
 
 ### DELETE /users/:id
+
 Delete a user by their ID.
+
 ```bash
 curl -X DELETE localhost:8080/users/1
 ```
 
-### PUT /users/:id
-Replace a specific user by id.
-```bash
-curl -X PUT localhost:8080/users/1 -H "Content-Type: application/json" -d '{"name":"John", "surname":"Doe", "birthYear":1979}' -v
-```
-
 ### PATCH /users/:id
+
 Update user by his id.
+
 ```bash
 curl -X PATCH localhost:8080/users/1  -H "Content-Type: application/json" -d '{"birthYear":1971}' -v
 ```
 
 ## File Storage
-The project uses a JSON file to persist user data. The `jsonTools` package handles reading from and writing to this file. Ensure the JSON file exists and is properly formatted before starting the application.
+
+project uses PostgreSQL database hosted on [neon](https://neon.tech)
 
 ## Dependencies
+
 - [Gin](https://github.com/gin-gonic/gin): HTTP web framework
+- [pgx](https://github.com/jackc/pgx): PostgreSQL driver
 
 ## License
+
 This project is licensed under the MIT License.
-
-

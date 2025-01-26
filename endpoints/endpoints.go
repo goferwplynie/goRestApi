@@ -100,13 +100,11 @@ func PatchUserHandler(ctx *gin.Context) {
 		return
 	}
 
-	log.Println(user)
-
 	if user.Name != "" {
-		db.DB.Exec(ctx, "UPDATE users SET name = "+user.Name+" WHERE id = "+fmt.Sprint(id)+";")
+		db.DB.Exec(ctx, "UPDATE users SET name = '"+fmt.Sprint(user.Name)+"' WHERE id = "+fmt.Sprint(id)+";")
 	}
 	if user.Surname != "" {
-		db.DB.Exec(ctx, "UPDATE users SET surname = "+user.Surname+" WHERE id = "+fmt.Sprint(id)+";")
+		db.DB.Exec(ctx, "UPDATE users SET surname = '"+fmt.Sprint(user.Surname)+"' WHERE id = "+fmt.Sprint(id)+";")
 	}
 	if user.BirthYear != 0 {
 		db.DB.Exec(ctx, "UPDATE users SET birth_year = "+fmt.Sprint(user.BirthYear)+" WHERE id = "+fmt.Sprint(id)+";")

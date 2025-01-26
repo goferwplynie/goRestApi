@@ -1,4 +1,4 @@
 # TODO
 
 - authentication
-- json file -> db
+- fix sql injection ahh queries
