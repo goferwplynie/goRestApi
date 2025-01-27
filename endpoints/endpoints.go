@@ -24,6 +24,10 @@ func handleIdParam(ctx *gin.Context) int {
 	return Id
 }
 
+func HandleLogin(ctx *gin.Context) {
+
+}
+
 func GetUsersHandler(ctx *gin.Context) {
 	rows, err := db.DB.Query(ctx, "select * from users")
 
