@@ -18,6 +18,7 @@ func handleIdParam(ctx *gin.Context) int {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"Error": "Wrong Id type",
 		})
+		return 0
 	}
 
 	return Id
@@ -81,7 +82,7 @@ func PostUsersHandler(ctx *gin.Context) {
 
 func DeleteUsersHandler(ctx *gin.Context) {
 	id := handleIdParam(ctx)
-	query := "DELETE FROM public.users WHERE id =$1"
+	query := "DELETE FROM public.users WHERE id = $1"
 
 	db.DB.Exec(ctx, query, id)
 
