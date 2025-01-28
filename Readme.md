@@ -34,6 +34,8 @@ GoRestAPI is a simple RESTful API built using the Gin framework in Go. It provid
 
 3. create .env file
 4. add `DATABASE_URL` variable to .env
+5. add `ADMIN_LOGIN` and `ADMIN_PASSWORD` variables to .env
+6. add `JWT_SECRET` variable to .env
 
 ## Usage
 
@@ -65,38 +67,58 @@ Retrieve a specific user by their ID.
 curl -X GET localhost:8080/users/1
 ```
 
-### POST /users
+### POST /login
+
+login as admin and return jwt token
+
+```bash
+curl -X POST localhost:8080/login \
+-H "Content-Type: application/json" \
+-d '{"name": admin_login, "password": password}'
+```
+
+### POST /users (protected)
 
 Add a new user by sending a JSON payload.
 
 ```bash
 curl -X POST localhost:8080/users \
+-H "Authorization: jwt_token" \
 -H "Content-Type: application/json" \
 -d '{"Id": 1, "Name": "John Doe", "birthYear": 1999}'
 ```
 
-### DELETE /users/:id
+### DELETE /users/:id (protected)
 
 Delete a user by their ID.
 
 ```bash
-curl -X DELETE localhost:8080/users/1
+curl -H "Authorization: jwt_token" \
+-X DELETE localhost:8080/users/1
 ```
 
-### PATCH /users/:id
+### PATCH /users/:id (protected)
 
 Update user by his id.
 
 ```bash
-curl -X PATCH localhost:8080/users/1  -H "Content-Type: application/json" -d '{"birthYear":1971}' -v
+curl -X PATCH localhost:8080/users/1 \
+-H "Authorization: jwt_token" \
+-H "Content-Type: application/json"\
+-d '{"birthYear":1971}' -v
 ```
 
 ## File Storage
 
 project uses PostgreSQL database hosted on [neon](https://neon.tech)
 
+## Authentication
+
+this project uses jwt tokens to authorize admins to endpoints that can change some data.
+
 ## Dependencies
 
+- [jwt](github.com/golang-jwt/jwt/v5): jwt library for go
 - [Gin](https://github.com/gin-gonic/gin): HTTP web framework
 - [pgx](https://github.com/jackc/pgx): PostgreSQL driver
 

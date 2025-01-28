@@ -3,12 +3,15 @@ package endpoints
 import (
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"github.com/goferpwlynie/goRestApi/auth"
 	"github.com/goferpwlynie/goRestApi/db"
 	requestmodels "github.com/goferpwlynie/goRestApi/requestModels"
 	"github.com/goferpwlynie/goRestApi/users"
+	"github.com/joho/godotenv"
 )
 
 func handleIdParam(ctx *gin.Context) int {
@@ -25,7 +28,34 @@ func handleIdParam(ctx *gin.Context) int {
 }
 
 func HandleLogin(ctx *gin.Context) {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatalf("error reading .env file: %v\n", err)
+	}
+	login := os.Getenv("ADMIN_LOGIN")
+	password := os.Getenv("ADMIN_PASSWORD")
+	jwtKey := []byte(os.Getenv("JWT_SECRET"))
 
+	var credentials requestmodels.LoginRequest
+
+	err = ctx.ShouldBindJSON(&credentials)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": "Bad request",
+		})
+		return
+	}
+
+	if credentials.Name == login && credentials.Password == password {
+		jwtToken, _ := auth.GenerateToken(login, jwtKey)
+		ctx.JSON(http.StatusOK, gin.H{
+			"token": jwtToken,
+		})
+		return
+	}
+	ctx.JSON(http.StatusBadRequest, gin.H{
+		"error": "wrong credentials",
+	})
 }
 
 func GetUsersHandler(ctx *gin.Context) {
@@ -99,8 +129,6 @@ func PatchUserHandler(ctx *gin.Context) {
 	var user requestmodels.PatchRequest
 
 	err := ctx.ShouldBindJSON(&user)
-
-	log.Println(user)
 
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
