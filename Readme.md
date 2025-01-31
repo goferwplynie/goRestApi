@@ -118,7 +118,7 @@ this project uses jwt tokens to authorize admins to endpoints that can change so
 
 ## Dependencies
 
-- [jwt](github.com/golang-jwt/jwt/v5): jwt library for go
+- [jwt](https://github.com/golang-jwt/jwt/v5): jwt library for go
 - [Gin](https://github.com/gin-gonic/gin): HTTP web framework
 - [pgx](https://github.com/jackc/pgx): PostgreSQL driver
 
