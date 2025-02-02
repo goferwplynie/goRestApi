@@ -116,9 +116,7 @@ project uses PostgreSQL database hosted on [neon](https://neon.tech)
 
 this project uses jwt tokens to authorize admins to endpoints that can change some data.
 
-## Dependencies
-
-- [jwt](https://github.com/golang-jwt/jwt/v5): jwt library for go
+- [jwt](https://github.com/golang-jwt/jwt): jwt library for go
 - [Gin](https://github.com/gin-gonic/gin): HTTP web framework
 - [pgx](https://github.com/jackc/pgx): PostgreSQL driver
 
